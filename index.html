@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Balanced Scorecard - Strategic Life Planning Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --border-color: #e5e7eb;
+            --border-radius: 8px;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Main Content Areas */
+        .page-section {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 4rem 0;
+            background: var(--bg-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Scorecard Tool */
+        .scorecard-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .perspectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .perspective-card {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+        }
+
+        .perspective-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .perspective-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .financial { background: var(--accent-color); }
+        .learning { background: var(--primary-color); }
+        .process { background: var(--warning-color); }
+        .stakeholder { background: var(--danger-color); }
+
+        .perspective-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .goals-list {
+            list-style: none;
+        }
+
+        .goal-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .goal-progress {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100px;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .add-goal-btn {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: transparent;
+            border: 2px dashed var(--border-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-goal-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--bg-primary);
+            margin: 5% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            border-radius: var(--border-radius);
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            padding: 2rem 0;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .perspective-guide-card {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .perspective-guide-card h3 {
+            margin: 0 0 0.25rem 0;
+            color: var(--text-primary);
+        }
+
+        .perspective-guide-card h5 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .perspective-guide-card ul {
+            list-style-type: disc;
+            color: var(--text-secondary);
+        }
+
+        .perspective-guide-card li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .perspectives-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Personal Balanced Scorecard</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showSection('home')">Home</a></li>
+                <li><a href="#" onclick="showSection('tool')">Scorecard Tool</a></li>
+                <li><a href="#" onclick="showSection('guide')">Toolkit Guide</a></li>
+                <li><a href="#" onclick="showSection('about')">About</a></li>
+            </ul>
+            <a href="#" class="btn btn-primary" onclick="showSection('tool')">Build Your Scorecard</a>
+        </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="page-section active">
+        <div class="hero">
+            <div class="container">
+                <h1>Strategic Leadership for Your Whole Life</h1>
+                <p>Apply proven business strategy principles to create genuine balance and lasting fulfilment in your personal life</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary" onclick="showSection('tool')">Build Your Scorecard</a>
+                    <a href="#" class="btn btn-secondary" onclick="showSection('guide')">Discover How It Works</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 1rem;">Four Perspectives for Authentic Success</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon financial">💰</div>
+                        <h3>Financial Perspective</h3>
+                        <p>Build genuine financial security and freedom through thoughtful planning and disciplined wealth creation.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon learning">📚</div>
+                        <h3>Learning & Growth</h3>
+                        <p>Cultivate the skills, knowledge, and personal capabilities that fuel both career advancement and life satisfaction.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon process">⚙️</div>
+                        <h3>Internal Processes</h3>
+                        <p>Develop the habits, systems, and routines that create sustainable high performance without burnout.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon stakeholder">👥</div>
+                        <h3>Stakeholder Relations</h3>
+                        <p>Nurture the relationships that matter most - family, colleagues, and community - for deeper meaning and support.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Section -->
+    <section id="tool" class="page-section">
+        <div class="container scorecard-container">
+            <div class="dashboard-header">
+                <h1>Your Personal Balanced Scorecard</h1>
+                <div>
+                    <button class="btn btn-secondary" onclick="exportScorecard()">Export Report</button>
+                    <button class="btn btn-primary" onclick="saveScorecard()">Save Progress</button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-goals">0</div>
+                    <div class="stat-label">Total Objectives</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="completed-goals">0</div>
+                    <div class="stat-label">Achieved</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="avg-progress">0%</div>
+                    <div class="stat-label">Average Progress</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="active-goals">0</div>
+                    <div class="stat-label">In Progress</div>
+                </div>
+            </div>
+
+            <div class="perspectives-grid">
+                <!-- Financial Perspective -->
+                <div class="perspective-card">
+                    <div class="perspective-header">
+                        <div class="perspective-icon financial">💰</div>
+                        <div class="perspective-title">Financial Perspective</div>
+                    </div>
+                    <ul class="goals-list" id="financial-goals"></ul>
+                    <button class="add-goal-btn" onclick="showAddGoal('financial')">+ Add Financial Objective</button>
+                </div>
+
+                <!-- Learning & Growth -->
+                <div class="perspective-card">
+                    <div class="perspective-header">
+                        <div class="perspective-icon learning">📚</div>
+                        <div class="perspective-title">Learning & Growth</div>
+                    </div>
+                    <ul class="goals-list" id="learning-goals"></ul>
+                    <button class="add-goal-btn" onclick="showAddGoal('learning')">+ Add Development Objective</button>
+                </div>
+
+                <!-- Internal Process -->
+                <div class="perspective-card">
+                    <div class="perspective-header">
+                        <div class="perspective-icon process">⚙️</div>
+                        <div class="perspective-title">Internal Process</div>
+                    </div>
+                    <ul class="goals-list" id="process-goals"></ul>
+                    <button class="add-goal-btn" onclick="showAddGoal('process')">+ Add Process Objective</button>
+                </div>
+
+                <!-- Stakeholder -->
+                <div class="perspective-card">
+                    <div class="perspective-header">
+                        <div class="perspective-icon stakeholder">👥</div>
+                        <div class="perspective-title">Stakeholder Relations</div>
+                    </div>
+                    <ul class="goals-list" id="stakeholder-goals"></ul>
+                    <button class="add-goal-btn" onclick="showAddGoal('stakeholder')">+ Add Relationship Objective</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guide Section -->
+    <section id="guide" class="page-section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h1>Your Personal Balanced Scorecard Toolkit</h1>
+                <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 1rem auto;">A practical guide for senior leaders who want to apply strategic thinking to their whole life</p>
+            </div>
+
+            <div style="max-width: 1000px; margin: 0 auto;">
+                <!-- Getting Started -->
+                <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius); margin-bottom: 2rem;">
+                    <h2 style="color: var(--primary-color); margin-bottom: 1rem;">🚀 Getting Started</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <h4>1. Embrace the Four Perspectives</h4>
+                            <p>Just as you wouldn't run a business focused solely on profit, authentic personal success requires balance across four interconnected areas of life.</p>
+                        </div>
+                        <div>
+                            <h4>2. Begin Thoughtfully</h4>
+                            <p>Start with one or two meaningful goals per perspective. It's far better to make steady progress on fewer goals than to overwhelm yourself with good intentions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Four Perspectives Deep Dive -->
+                <div style="margin-bottom: 3rem;">
+                    <h2 style="text-align: center; margin-bottom: 2rem;">The Four Perspectives in Detail</h2>
+                    
+                    <div style="display: grid; gap: 2rem;">
+                        <!-- Financial Perspective -->
+                        <div class="perspective-guide-card">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="perspective-icon financial" style="width: 50px; height: 50px; font-size: 1.2rem;">💰</div>
+                                <div>
+                                    <h3>Financial Perspective</h3>
+                                    <p style="color: var(--text-secondary); margin: 0;">"How do I create genuine financial security and freedom?"</p>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                                <div>
+                                    <h5 style="color: var(--accent-color); margin-bottom: 0.5rem;">Typical Objectives:</h5>
+                                    <ul style="margin: 0; padding-left: 1rem;">
+                                        <li>Build £25,000 emergency fund</li>
+                                        <li>Increase annual income by 15%</li>
+                                        <li>Clear outstanding credit facilities</li>
+                                        <li>Contribute maximum to pension pot</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 style="color: var(--accent-color); margin-bottom: 0.5rem;">Key Measures:</h5>
+                                    <ul style="margin: 0; padding-left: 1rem;">
+                                        <li>Net worth progression</li>
+                                        <li>Monthly savings percentage</li>
+                                        <li>Investment portfolio performance</li>
+                                        <li>Financial independence timeline</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Learning & Growth -->
+                        <div class="perspective-guide-card">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="perspective-icon learning" style="width: 50px; height: 50px; font-size: 1.2rem;">📚</div>
+                                <div>
+                                    <h3>Learning & Growth Perspective</h3>
+                                    <p style="color: var(--text-secondary); margin: 0;">"How do I continue to develop and stay relevant?"</p>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                                <div>
+                                    <h5 style="color: var(--primary-color); margin-bottom: 0.5rem;">Typical Objectives:</h5>
+                                    <ul style="margin: 0; padding-left: 1rem;">
+                                        <li>Complete executive MBA programme</li>
+                                        <li>Read two business books monthly</li>
+                                        <li>Master conversational French</li>
+                                        <li>Attend Davos or similar summit</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 style="color: var(--primary-color); margin-bottom: 0.5rem;">Focus Areas:</h5>
+                                    <ul style="margin: 0; padding-left: 1rem;">
+                                        <li>Strategic leadership skills</li>
+                                        <li>Digital transformation knowledge</li>
+                                        <li>Cultural and language competency</li>
+                                        <li>Board-level governance expertise</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Internal Process -->
+                        <div class="perspective-guide-card">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="perspective-icon process" style="width: 50px; height: 50px; font-size: 1.2rem;">⚙️</div>
+                                <div>
+                                    <h3>Internal Process Perspective</h3>
+                                    <p style="color: var(--text-secondary); margin: 0;">"What systems and habits enable my best performance?"</p>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                                <div>
+                                    <h5 style="color: var(--warning-color); margin-bottom: 0.5rem;">Typical Objectives:</h5>
+                                    <ul style="margin: 0; padding-left: 1rem;">
+                                        <li>Exercise four times weekly</li>
+                                        <li>Begin each day with meditation</li>
+                                        <li>Maintain 7 hours quality sleep</li>
+                                        <li>Complete weekly planning ritual</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 style="color: var(--warning-color); margin-bottom: 0.5rem;">Focus Areas:</h5>
+                                    <ul style="margin: 0; padding-left: 1rem;">
+                                        <li>Morning and evening routines</li>
+                                        <li>Physical health and vitality</li>
+                                        <li>Productivity and focus systems</li>
+                                        <li>Work-life integration practices</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stakeholder Relations -->
+                        <div class="perspective-guide-card">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="perspective-icon stakeholder" style="width: 50px; height: 50px; font-size: 1.2rem;">👥</div>
+                                <div>
+                                    <h3>Stakeholder Relations Perspective</h3>
+                                    <p style="color: var(--text-secondary); margin: 0;">"How do I nurture the relationships that truly matter?"</p>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                                <div>
+                                    <h5 style="color: var(--danger-color); margin-bottom: 0.5rem;">Typical Objectives:</h5>
+                                    <ul style="margin: 0; padding-left: 1rem;">
+                                        <li>Weekly one-on-ones with partner</li>
+                                        <li>Monthly family weekend adventures</li>
+                                        <li>Quarterly mentoring sessions</li>
+                                        <li>Support local charity board</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 style="color: var(--danger-color); margin-bottom: 0.5rem;">Key Relationships:</h5>
+                                    <ul style="margin: 0; padding-left: 1rem;">
+                                        <li>Life partner and children</li>
+                                        <li>Extended family and close friends</li>
+                                        <li>Professional network and mentees</li>
+                                        <li>Community and philanthropic causes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step-by-Step Process -->
+                <div style="background: var(--bg-primary); border: 2px solid var(--border-color); border-radius: var(--border-radius); padding: 2rem; margin-bottom: 2rem;">
+                    <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">📋 Your Implementation Roadmap</h2>
+                    
+                    <div style="display: grid; gap: 1.5rem;">
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="background: var(--primary-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">1</div>
+                            <div>
+                                <h4>Define Your Personal Vision</h4>
+                                <p>Before diving into goals, take time to clarify what genuine success means to you across each perspective. What would make you genuinely proud in one, five, and ten years' time?</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="background: var(--primary-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">2</div>
+                            <div>
+                                <h4>Craft SMART Objectives</h4>
+                                <p><strong>S</strong>pecific, <strong>M</strong>easurable, <strong>A</strong>chievable, <strong>R</strong>elevant, <strong>T</strong>ime-bound. Each objective should have clear metrics and deadlines, just as you'd expect in business.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="background: var(--primary-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">3</div>
+                            <div>
+                                <h4>Develop Action Plans</h4>
+                                <p>Break each objective into quarterly milestones and weekly actions. What specific steps will you take this week to move meaningfully closer to your goals?</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="background: var(--primary-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">4</div>
+                            <div>
+                                <h4>Schedule Weekly Reviews</h4>
+                                <p>Block 30 minutes weekly for your personal board meeting. Review progress, celebrate wins, identify obstacles, and adjust strategies. Consistency here creates momentum everywhere.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="background: var(--primary-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">5</div>
+                            <div>
+                                <h4>Maintain Strategic Balance</h4>
+                                <p>Resist the temptation to focus entirely on one area. The magic happens when progress in each perspective reinforces and enables success in the others.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Best Practices -->
+                <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 2rem; border-radius: var(--border-radius); margin-bottom: 2rem;">
+                    <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">💡 Proven Principles & Best Practices</h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <h4 style="color: var(--accent-color);">🎯 Objective Setting</h4>
+                            <ul style="padding-left: 1rem;">
+                                <li>Begin with 1-2 objectives per perspective</li>
+                                <li>Make them challenging yet genuinely achievable</li>
+                                <li>Ensure alignment with your core values</li>
+                                <li>Review and refresh quarterly</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 style="color: var(--warning-color);">📊 Progress Monitoring</h4>
+                            <ul style="padding-left: 1rem;">
+                                <li>Update progress weekly without fail</li>
+                                <li>Celebrate progress, however small</li>
+                                <li>Be brutally honest about setbacks</li>
+                                <li>Focus on leading indicators, not just results</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 style="color: var(--danger-color);">⚖️ Sustaining Balance</h4>
+                            <ul style="padding-left: 1rem;">
+                                <li>No perspective should dominate or disappear</li>
+                                <li>Strong relationships fuel all other achievements</li>
+                                <li>Physical and mental health enable everything else</li>
+                                <li>Financial stress undermines all other progress</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 style="color: var(--primary-color);">🔄 Continuous Evolution</h4>
+                            <ul style="padding-left: 1rem;">
+                                <li>Learn equally from successes and setbacks</li>
+                                <li>Adjust strategies based on what actually works</li>
+                                <li>Seek feedback from trusted advisors</li>
+                                <li>Stay flexible as life priorities evolve</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Common Pitfalls -->
+                <div style="background: #fef2f2; border: 1px solid #fecaca; padding: 2rem; border-radius: var(--border-radius); margin-bottom: 2rem;">
+                    <h2 style="color: var(--danger-color); margin-bottom: 1.5rem;">⚠️ Common Pitfalls to Sidestep</h2>
+                    
+                    <div style="display: grid; gap: 1rem;">
+                        <div style="display: flex; gap: 1rem; align-items: start;">
+                            <span style="color: var(--danger-color); font-size: 1.2rem;">❌</span>
+                            <div>
+                                <strong>Over-ambitious initial goals</strong> - Start modestly and build sustainable momentum
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: start;">
+                            <span style="color: var(--danger-color); font-size: 1.2rem;">❌</span>
+                            <div>
+                                <strong>Single-perspective obsession</strong> - Balance isn't optional; it's essential for lasting success
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: start;">
+                            <span style="color: var(--danger-color); font-size: 1.2rem;">❌</span>
+                            <div>
+                                <strong>Inconsistent reviews</strong> - Sporadic attention leads to sporadic results
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: start;">
+                            <span style="color: var(--danger-color); font-size: 1.2rem;">❌</span>
+                            <div>
+                                <strong>Vague aspirations</strong> - "Improve fitness" vs "Complete Couch to 5K programme by March"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ready to Start -->
+                <div style="text-align: center; padding: 2rem; background: var(--primary-color); color: white; border-radius: var(--border-radius);">
+                    <h2>Ready to Lead Your Whole Life Strategically?</h2>
+                    <p style="margin: 1rem 0; opacity: 0.9;">Apply the same strategic rigour that drives your professional success to create authentic balance and fulfilment</p>
+                    <a href="#" class="btn btn-secondary" onclick="showSection('tool')" style="color: var(--primary-color); background: white; border-color: white;">Build Your Scorecard</a>
+                </div>
+            </div></li>
+                                        <li>Host monthly friend gatherings</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 style="color: var(--danger-color); margin-bottom: 0.5rem;">Key Relationships:</h5>
+                                    <ul style="margin: 0; padding-left: 1rem;">
+                                        <li>Family & spouse</li>
+                                        <li>Close friends</li>
+                                        <li>Professional network</li>
+                                        <li>Community involvement</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step-by-Step Process -->
+                <div style="background: var(--bg-primary); border: 2px solid var(--border-color); border-radius: var(--border-radius); padding: 2rem; margin-bottom: 2rem;">
+                    <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">📋 Step-by-Step Implementation</h2>
+                    
+                    <div style="display: grid; gap: 1.5rem;">
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="background: var(--primary-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">1</div>
+                            <div>
+                                <h4>Clarify Your Vision</h4>
+                                <p>Before setting goals, define what success looks like for you in each perspective. What does your ideal life look like in 1, 5, and 10 years?</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="background: var(--primary-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">2</div>
+                            <div>
+                                <h4>Set SMART Goals</h4>
+                                <p><strong>S</strong>pecific, <strong>M</strong>easurable, <strong>A</strong>chievable, <strong>R</strong>elevant, <strong>T</strong>ime-bound. Each goal should have a clear target number and deadline.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="background: var(--primary-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">3</div>
+                            <div>
+                                <h4>Create Action Plans</h4>
+                                <p>Break each goal into smaller, actionable steps. What specific actions will you take this week to move closer to your goals?</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="background: var(--primary-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">4</div>
+                            <div>
+                                <h4>Review Weekly</h4>
+                                <p>Schedule a weekly 30-minute review to update progress, celebrate wins, and adjust strategies. Consistency is key to success.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="background: var(--primary-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">5</div>
+                            <div>
+                                <h4>Maintain Balance</h4>
+                                <p>Avoid neglecting any perspective. If one area is falling behind, consider how progress in other areas might help, or reallocate your focus temporarily.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Best Practices -->
+                <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 2rem; border-radius: var(--border-radius); margin-bottom: 2rem;">
+                    <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">💡 Best Practices & Tips</h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <h4 style="color: var(--accent-color);">🎯 Goal Setting</h4>
+                            <ul style="padding-left: 1rem;">
+                                <li>Start with 1-2 goals per perspective</li>
+                                <li>Make goals challenging but achievable</li>
+                                <li>Ensure goals connect to your values</li>
+                                <li>Review and adjust goals quarterly</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 style="color: var(--warning-color);">📊 Progress Tracking</h4>
+                            <ul style="padding-left: 1rem;">
+                                <li>Update progress weekly</li>
+                                <li>Celebrate small wins</li>
+                                <li>Be honest about setbacks</li>
+                                <li>Look for leading indicators</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 style="color: var(--danger-color);">⚖️ Maintaining Balance</h4>
+                            <ul style="padding-left: 1rem;">
+                                <li>No perspective should be 100% or 0%</li>
+                                <li>Strong relationships support all goals</li>
+                                <li>Health habits enable everything else</li>
+                                <li>Financial stress undermines other areas</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 style="color: var(--primary-color);">🔄 Continuous Improvement</h4>
+                            <ul style="padding-left: 1rem;">
+                                <li>Learn from both successes and failures</li>
+                                <li>Adjust strategies based on results</li>
+                                <li>Seek feedback from trusted friends</li>
+                                <li>Stay flexible with changing priorities</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Common Mistakes -->
+                <div style="background: #fef2f2; border: 1px solid #fecaca; padding: 2rem; border-radius: var(--border-radius); margin-bottom: 2rem;">
+                    <h2 style="color: var(--danger-color); margin-bottom: 1.5rem;">⚠️ Common Mistakes to Avoid</h2>
+                    
+                    <div style="display: grid; gap: 1rem;">
+                        <div style="display: flex; gap: 1rem; align-items: start;">
+                            <span style="color: var(--danger-color); font-size: 1.2rem;">❌</span>
+                            <div>
+                                <strong>Setting too many goals initially</strong> - Start small and build momentum
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: start;">
+                            <span style="color: var(--danger-color); font-size: 1.2rem;">❌</span>
+                            <div>
+                                <strong>Focusing only on one perspective</strong> - Balance is essential for sustainable success
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: start;">
+                            <span style="color: var(--danger-color); font-size: 1.2rem;">❌</span>
+                            <div>
+                                <strong>Irregular progress reviews</strong> - Consistency in tracking leads to consistency in results
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: start;">
+                            <span style="color: var(--danger-color); font-size: 1.2rem;">❌</span>
+                            <div>
+                                <strong>Making goals too vague</strong> - "Get healthier" vs "Exercise 3x per week for 30 minutes"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ready to Start -->
+                <div style="text-align: center; padding: 2rem; background: var(--primary-color); color: white; border-radius: var(--border-radius);">
+                    <h2>Ready to Start Your Journey?</h2>
+                    <p style="margin: 1rem 0; opacity: 0.9;">Transform your life with strategic balance and focused action</p>
+                    <a href="#" class="btn btn-secondary" onclick="showSection('tool')" style="color: var(--primary-color); background: white; border-color: white;">Create Your Scorecard Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="page-section">
+        <div class="container">
+            <h1>About the Personal Balanced Scorecard</h1>
+            <div style="max-width: 800px; margin: 2rem auto;">
+                <p>The Personal Balanced Scorecard adapts the proven strategic framework used by Fortune 500 companies for individual life planning. It's designed specifically for senior leaders who understand the power of systematic thinking and want to apply the same rigour to their personal lives.</p>
+                
+                <h3>Why Four Perspectives Matter</h3>
+                <p>Research consistently shows that sustainable success requires balanced attention across multiple life domains. Just as you wouldn't evaluate business performance using only financial metrics, authentic personal fulfilment emerges when you thoughtfully develop all four perspectives in harmony.</p>
+                
+                <h3>For Senior Leaders, By Senior Leaders</h3>
+                <p>This approach was developed by and for executives who've learned that professional achievement without personal balance is ultimately hollow. The framework respects your strategic thinking whilst providing practical tools for life integration.</p>
+                
+                <h3>Launching October 1st</h3>
+                <p>This digital tool accompanies our comprehensive guide launching October 1st, which provides detailed case studies, advanced strategies, and proven methodologies from leaders who've successfully implemented their personal balanced scorecards.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Goal Modal -->
+    <div id="goal-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Add New Objective</h2>
+            <form id="goal-form">
+                <div class="form-group">
+                    <label for="goal-title">Objective Title</label>
+                    <input type="text" id="goal-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="goal-description">Description</label>
+                    <textarea id="goal-description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="goal-target">Target Value</label>
+                    <input type="number" id="goal-target" required>
+                </div>
+                <div class="form-group">
+                    <label for="goal-current">Current Value</label>
+                    <input type="number" id="goal-current" value="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="goal-deadline">Target Date</label>
+                    <input type="date" id="goal-deadline">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Objective</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentPerspective = '';
+        let goals = {
+            financial: [],
+            learning: [],
+            process: [],
+            stakeholder: []
+        };
+
+        // Load saved data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadScorecard();
+            updateStats();
+        });
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function showAddGoal(perspective) {
+            currentPerspective = perspective;
+            document.getElementById('goal-modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('goal-modal').style.display = 'none';
+            document.getElementById('goal-form').reset();
+        }
+
+        document.getElementById('goal-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            addGoal();
+        });
+
+        function addGoal() {
+            const goal = {
+                id: Date.now(),
+                title: document.getElementById('goal-title').value,
+                description: document.getElementById('goal-description').value,
+                target: parseFloat(document.getElementById('goal-target').value),
+                current: parseFloat(document.getElementById('goal-current').value),
+                deadline: document.getElementById('goal-deadline').value,
+                perspective: currentPerspective
+            };
+
+            goals[currentPerspective].push(goal);
+            renderGoals(currentPerspective);
+            updateStats();
+            closeModal();
+        }
+
+        function renderGoals(perspective) {
+            const container = document.getElementById(perspective + '-goals');
+            container.innerHTML = '';
+
+            goals[perspective].forEach(goal => {
+                const progress = Math.min((goal.current / goal.target) * 100, 100);
+                const goalItem = document.createElement('li');
+                goalItem.className = 'goal-item';
+                goalItem.innerHTML = `
+                    <div>
+                        <strong>${goal.title}</strong>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                            ${goal.current}/${goal.target} ${goal.deadline ? '• Due: ' + goal.deadline : ''}
+                        </div>
+                    </div>
+                    <div class="goal-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${progress}%"></div>
+                        </div>
+                        <span style="font-size: 0.875rem; min-width: 40px;">${Math.round(progress)}%</span>
+                        <button onclick="editGoal('${perspective}', ${goal.id})" style="margin-left: 0.5rem; background: none; border: none; cursor: pointer;">✏️</button>
+                        <button onclick="deleteGoal('${perspective}', ${goal.id})" style="margin-left: 0.25rem; background: none; border: none; cursor: pointer; color: var(--danger-color);">🗑️</button>
+                    </div>
+                `;
+                container.appendChild(goalItem);
+            });
+        }
+
+        function editGoal(perspective, goalId) {
+            const goal = goals[perspective].find(g => g.id === goalId);
+            if (!goal) return;
+
+            document.getElementById('goal-title').value = goal.title;
+            document.getElementById('goal-description').value = goal.description;
+            document.getElementById('goal-target').value = goal.target;
+            document.getElementById('goal-current').value = goal.current;
+            document.getElementById('goal-deadline').value = goal.deadline;
+            
+            currentPerspective = perspective;
+            
+            // Remove the old goal
+            goals[perspective] = goals[perspective].filter(g => g.id !== goalId);
+            
+            document.getElementById('goal-modal').style.display = 'block';
+        }
+
+        function deleteGoal(perspective, goalId) {
+            if (confirm('Are you sure you want to delete this goal?')) {
+                goals[perspective] = goals[perspective].filter(g => g.id !== goalId);
+                renderGoals(perspective);
+                updateStats();
+            }
+        }
+
+        function updateStats() {
+            const allGoals = Object.values(goals).flat();
+            const totalGoals = allGoals.length;
+            const completedGoals = allGoals.filter(g => g.current >= g.target).length;
+            const activeGoals = totalGoals - completedGoals;
+            const avgProgress = totalGoals > 0 ? 
+                Math.round(allGoals.reduce((sum, goal) => sum + Math.min((goal.current / goal.target) * 100, 100), 0) / totalGoals) : 0;
+
+            document.getElementById('total-goals').textContent = totalGoals;
+            document.getElementById('completed-goals').textContent = completedGoals;
+            document.getElementById('avg-progress').textContent = avgProgress + '%';
+            document.getElementById('active-goals').textContent = activeGoals;
+        }
+
+        function saveScorecard() {
+            localStorage.setItem('personalBalancedScorecard', JSON.stringify(goals));
+            alert('Scorecard saved successfully!');
+        }
+
+        function loadScorecard() {
+            const saved = localStorage.getItem('personalBalancedScorecard');
+            if (saved) {
+                goals = JSON.parse(saved);
+                Object.keys(goals).forEach(perspective => {
+                    renderGoals(perspective);
+                });
+            }
+        }
+
+        function exportScorecard() {
+            // Simple export functionality - would be enhanced with proper PDF generation
+            const exportData = {
+                generatedOn: new Date().toLocaleDateString(),
+                goals: goals,
+                stats: {
+                    totalGoals: Object.values(goals).flat().length,
+                    completedGoals: Object.values(goals).flat().filter(g => g.current >= g.target).length,
+                    avgProgress: document.getElementById('avg-progress').textContent
+                }
+            };
+            
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'personal-balanced-scorecard.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Click outside modal to close
+        window.onclick = function(event) {
+            const modal = document.getElementById('goal-modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
