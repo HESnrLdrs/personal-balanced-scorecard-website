@@ -1186,6 +1186,41 @@
                     <div style="background: #fef9e7; padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--warning-color); margin: 1.5rem 0;">
                         <p style="margin: 0; font-style: italic;">"We use sophisticated strategic planning at work, but wing it with our personal lives. What if we applied the same systematic thinking to life balance?" - From our October 1st guide</p>
                     </div>
+
+                    <!-- 2x2 Matrix for About Page -->
+                    <div class="matrix-container" style="margin: 2rem 0;">
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: var(--primary-color);">The Four Strategic Life Perspectives</h4>
+                        
+                        <div class="matrix-grid">
+                            <!-- Learning & Growth (Top Left) -->
+                            <div class="matrix-cell" style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📚</div>
+                                <h3>Learning & Growth</h3>
+                                <p>Cultivate the skills, knowledge, and capabilities that fuel career advancement and life satisfaction</p>
+                            </div>
+
+                            <!-- Financial (Top Right) -->
+                            <div class="matrix-cell" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">💷</div>
+                                <h3>Financial Perspective</h3>
+                                <p>Build genuine financial security and freedom through thoughtful planning and disciplined wealth creation</p>
+                            </div>
+
+                            <!-- Internal Process (Bottom Left) -->
+                            <div class="matrix-cell" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚙️</div>
+                                <h3>Internal Processes</h3>
+                                <p>Develop the habits, systems, and routines that create sustainable high performance without burnout</p>
+                            </div>
+
+                            <!-- Stakeholder Relations (Bottom Right) -->
+                            <div class="matrix-cell" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">👥</div>
+                                <h3>Stakeholder Relations</h3>
+                                <p>Nurture the relationships that matter most - family, colleagues, and community - for deeper meaning and support</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Part of Your Toolkit -->
@@ -1454,6 +1489,20 @@
             a.download = 'personal-balanced-scorecard.json';
             a.click();
             URL.revokeObjectURL(url);
+        }
+
+        // Progressive Disclosure Toggle
+        function toggleIntro() {
+            const content = document.getElementById('intro-content');
+            const arrow = document.getElementById('intro-arrow');
+            
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                content.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+            }
         }
 
         // Click outside modal to close
