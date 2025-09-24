@@ -508,12 +508,67 @@
             </div>
         </div>
 
+        <!-- Progressive Disclosure Introduction -->
+        <div class="container" style="padding: 2rem 0 1rem 0;">
+            <div class="progressive-intro" style="max-width: 800px; margin: 0 auto; background: var(--bg-secondary); border-radius: var(--border-radius); overflow: hidden;">
+                <div class="intro-header" onclick="toggleIntro()" style="padding: 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
+                    <div>
+                        <h3 style="margin: 0; color: var(--primary-color); font-size: 1.1rem;">New to Personal Balanced Scorecards?</h3>
+                        <p style="margin: 0.25rem 0 0 0; color: var(--text-secondary); font-size: 0.9rem;">Quick introduction to this strategic framework</p>
+                    </div>
+                    <div id="intro-arrow" style="color: var(--primary-color); font-size: 1.2rem; transition: transform 0.3s ease;">▼</div>
+                </div>
+                
+                <div id="intro-content" style="display: none; padding: 2rem; background: var(--bg-primary);">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                        <div>
+                            <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">🎯 What It Is</h4>
+                            <p style="margin: 0; font-size: 0.95rem;">The Balanced Scorecard (developed by Kaplan & Norton, 1992) revolutionised business strategy by measuring success across four balanced perspectives, not just financial metrics. We've adapted this proven framework for personal life planning.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">⚖️ Why It Works</h4>
+                            <p style="margin: 0; font-size: 0.95rem;">As a senior leader, you already use strategic frameworks professionally. This applies the same systematic thinking to achieve authentic life balance across four interconnected areas that support each other.</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: var(--border-radius);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 1rem;">🚀 How to Start</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: 0.9rem;">
+                            <div><strong>1. View the Matrix</strong><br>See the four life perspectives below</div>
+                            <div><strong>2. Build Your Scorecard</strong><br>Set objectives in each area</div>
+                            <div><strong>3. Track Progress</strong><br>Review weekly like a business review</div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 1.5rem;">
+                        <a href="#" class="btn btn-primary" onclick="showSection('tool')" style="margin-right: 1rem;">Start Building Now</a>
+                        <a href="#" class="btn btn-secondary" onclick="showSection('guide')">Read Full Guide</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="features">
             <div class="container">
                 <h2 style="text-align: center; margin-bottom: 2rem;">Four Perspectives for Authentic Success</h2>
                 
-                <!-- 2x2 Matrix -->
                 <div class="matrix-container">
+                    <!-- Matrix Labels Container -->
+                    <div style="position: relative; width: 100%; max-width: 600px; margin: 0 auto;">
+                        <!-- Vertical Axis Labels -->
+                        <div style="position: absolute; left: -15px; top: 50px; height: 200px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; width: 10px;">
+                            <span style="writing-mode: vertical-rl; text-orientation: mixed; font-weight: 600; color: var(--text-secondary); font-size: 0.75rem; transform: rotate(180deg);">FUTURE</span>
+                            <span style="writing-mode: vertical-rl; text-orientation: mixed; font-weight: 600; color: var(--text-secondary); font-size: 0.75rem; transform: rotate(180deg);">PRESENT</span>
+                        </div>
+                        
+                        <!-- Horizontal Axis Labels -->
+                        <div style="position: absolute; top: 260px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 20%;">
+                            <span style="font-weight: 600; color: var(--text-secondary); font-size: 0.75rem;">INTERNAL</span>
+                            <span style="font-weight: 600; color: var(--text-secondary); font-size: 0.75rem;">EXTERNAL</span>
+                        </div>
+                    </div>
+                    
                     <div class="matrix-grid">
                         
                         <!-- Learning & Growth (Top Left) -->
@@ -543,21 +598,6 @@
                             <h3>Stakeholder Relations</h3>
                             <p>Nurture the relationships that matter most - family, colleagues, and community - for deeper meaning and support</p>
                         </div>
-                    </div>
-
-                    <!-- Matrix Labels -->
-                    <div style="position: relative; margin-top: 1rem;">
-                        <!-- Top Row Label -->
-                        <div style="position: absolute; top: -210px; left: -120px; font-weight: 600; color: var(--text-secondary); font-size: 0.8rem; transform: rotate(-90deg); transform-origin: center;">FUTURE FOCUSED</div>
-                        
-                        <!-- Bottom Row Label -->
-                        <div style="position: absolute; top: -10px; left: -120px; font-weight: 600; color: var(--text-secondary); font-size: 0.8rem; transform: rotate(-90deg); transform-origin: center;">PRESENT FOCUSED</div>
-                        
-                        <!-- Left Column Label -->
-                        <div style="position: absolute; top: 15px; left: 25%; transform: translateX(-50%); font-weight: 600; color: var(--text-secondary); font-size: 0.8rem;">INTERNAL</div>
-                        
-                        <!-- Right Column Label -->
-                        <div style="position: absolute; top: 15px; left: 75%; transform: translateX(-50%); font-weight: 600; color: var(--text-secondary); font-size: 0.8rem;">EXTERNAL</div>
                     </div>
                 </div>
 
