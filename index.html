@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paul Thomas - Academic Leadership & Career Transformation</title>
     <style>
+        .back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #1B365D;
+    color: white;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background: #2A9D8F;
+    transform: translateY(-3px);
+}
         * {
             margin: 0;
             padding: 0;
@@ -315,5 +344,24 @@
             });
         });
     </script>
+    <button id="backToTop" class="back-to-top" onclick="scrollToTop()">↑ Top</button>
+<script>
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Show/hide button based on scroll position
+window.addEventListener('scroll', function() {
+    const button = document.getElementById('backToTop');
+    if (window.scrollY > 300) {
+        button.classList.add('show');
+    } else {
+        button.classList.remove('show');
+    }
+});
+</script>
 </body>
 </html>
