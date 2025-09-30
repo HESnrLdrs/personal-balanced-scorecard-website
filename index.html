@@ -1,1 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+.app-header {
+    background: #ffffff;
+    padding: 1rem;
+    border-bottom: 2px solid #2c5aa0;
+    margin-bottom: 1rem;
+}
+.app-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.site-logo {
+    font-weight: 700;
+    color: #ffffff;             /* White text */
+    background: #2c5aa0;        /* Blue background */
+    padding: 8px 16px;          /* Good padding */
+    border-radius: 6px;         /* Rounded corners */
+    text-decoration: none;
+    font-size: 1.1em;
+    border: 2px solid #1a4480;  /* Darker blue border */
+}
 
+.site-logo:hover {
+    background: #1a4480;        /* Darker blue on hover */
+    color: #ffffff;             /* Keep white text */
+}
+.breadcrumb {
+    color: #ffffff;          /* White text for everything */
+    font-weight: 500;
+}
+
+.breadcrumb a {
+    color: #ffffff;          /* White text for links */
+    background: #2c5aa0;     /* Blue background */
+    text-decoration: none;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.breadcrumb span {
+    color: #ffffff;          /* White text for current page */
+    font-weight: 600;
+    background: #1a4480;     /* Darker blue background */
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Strategic Life Balance Scorecard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Georgia, serif;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f8f9fd 0%, #f1f3f9 100%);
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        /* Navigation Bar */
+        .app-nav {
+            background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .back-btn {
+            background: rgba(255,255,255,0.2) !important;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3) !important;
+        }
+        
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            border-left: 5px solid;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .resources { border-left-color: #f39c12; }
+        .relationships { border-left-color: #3498db; }
+        .systems { border-left-color: #27ae60; }
+        .development { border-left-color: #9b59b6; }
+        .question {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .slider {
+            flex: 1;
+            height: 8px;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+            appearance: none;
+        }
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .score-display {
+            font-weight: bold;
+            color: #667eea;
+            min-width: 30px;
+        }
+        .calculate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            transition: all 0.3s ease;
+        }
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+        .results {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .overall-score {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .overall-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .bsc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .bsc-quadrant {
+            border: 2px solid;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            background: white;
+        }
+        .bsc-quadrant.resources { border-color: #f39c12; }
+        .bsc-quadrant.relationships { border-color: #3498db; }
+        .bsc-quadrant.systems { border-color: #27ae60; }
+        .bsc-quadrant.development { border-color: #9b59b6; }
+        .bsc-score {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .bsc-quadrant.resources .bsc-score { color: #f39c12; }
+        .bsc-quadrant.relationships .bsc-score { color: #3498db; }
+        .bsc-quadrant.systems .bsc-score { color: #27ae60; }
+        .bsc-quadrant.development .bsc-score { color: #9b59b6; }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .action-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+        .pdf-btn { background: #e74c3c; }
+        .goals-btn { background: #27ae60; }
+        .reset-btn { background: #6c757d; }
+        .goals-dashboard {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .goal-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
+        }
+        .goal-input {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .goal-input label {
+            min-width: 60px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        .goal-input input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+        .goal-input input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .action-input {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #e9ecef;
+        }
+        .action-input input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+        .action-input input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .implementation-plan {
+            background: linear-gradient(135deg, #f8f9fd 0%, #f1f3f9 100%);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            margin-bottom: 25px;
+        }
+        .phase {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .phase h4 {
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+        .phase label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .thomson-guidance {
+            background: linear-gradient(135deg, #fef9e7 0%, #fdf2d0 100%);
+            border: 1px solid #f39c12;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .guidance-toggle {
+            padding: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #d68910;
+            border-bottom: 1px solid rgba(243, 156, 18, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        .guidance-toggle:hover {
+            background: rgba(243, 156, 18, 0.1);
+        }
+        .guidance-content {
+            display: none;
+            padding: 20px;
+            background: white;
+        }
+        .guidance-content.active {
+            display: block;
+        }
+        .thomson-quote {
+            background: linear-gradient(135deg, #f8f9fd 0%, #f1f3f9 100%);
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        .thomson-advice {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .thomson-advice h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .thomson-advice ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .thomson-advice li {
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+        .thomson-examples {
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4f5d4 100%);
+            padding: 15px;
+            border-left: 4px solid #27ae60;
+            border-radius: 8px;
+        }
+        .thomson-examples h4 {
+            color: #27ae60;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .thomson-examples p {
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .help-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .help-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .help-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .help-close:hover {
+            color: #667eea;
+        }
+        .help-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .help-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .help-section ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .help-section li {
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+        @media (max-width: 768px) {
+            .bsc-grid { grid-template-columns: 1fr; }
+            .nav-links { flex-direction: column; gap: 10px; }
+            .app-nav { flex-direction: column; text-align: center; }
+            .help-content { width: 95%; margin: 10% auto; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-header">
+    <div class="app-nav">
+        <a href="../index.html" class="site-logo">Senior Academic Transformations</a>
+        <div class="breadcrumb">
+            <a href="../apps.html">Apps</a> > <span>Life Balance Scorecard</span>
+        </div>
+    </div>
+</div>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="app-nav">
+            <div class="nav-brand">Personal Strategic Life Balance Scorecard</div>
+            <div class="nav-links">
+                <a href="javascript:void(0)" onclick="scrollToSection('about')">About</a>
+                <a href="javascript:void(0)" onclick="scrollToSection('assessment')">Assessment</a>
+                <a href="javascript:void(0)" onclick="showHelp()">Help</a>
+            </div>
+        </div>
+        
+        <div class="header">
+            <h1>Personal Strategic Life Balance Scorecard</h1>
+            <p>With Professor Sarah Thomson's Four-Area Framework</p>
+            <p style="font-size: 0.9em; margin-top: 10px; opacity: 0.9;">Assess your life balance using proven academic frameworks</p>
+        </div>
+
+        <!-- Introduction & Explanation Section -->
+        <div id="about" class="section" style="border-left-color: #667eea;">
+            <h2>🎯 About This Assessment</h2>
+            
+            <div style="background: linear-gradient(135deg, #f8f9fd 0%, #f1f3f9 100%); padding: 20px; border-radius: 10px; margin-bottom: 25px;">
+                <h3 style="color: #667eea; margin-bottom: 15px;">What is a Balanced Scorecard?</h3>
+                <p style="margin-bottom: 15px;">The <strong>Balanced Scorecard</strong> was developed by Kaplan and Norton in 1992 as a strategic management tool for organizations. Instead of focusing solely on financial metrics, it measures performance across four balanced perspectives:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li><strong>Financial</strong> - How do we look to shareholders?</li>
+                    <li><strong>Customer</strong> - How do customers see us?</li>
+                    <li><strong>Internal Process</strong> - What must we excel at?</li>
+                    <li><strong>Learning & Growth</strong> - Can we continue to improve and create value?</li>
+                </ul>
+                <p>This framework has helped thousands of organizations achieve strategic clarity and balanced performance measurement.</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #fef9e7 0%, #fdf2d0 100%); padding: 20px; border-radius: 10px; margin-bottom: 25px; border: 1px solid #f39c12;">
+                <h3 style="color: #d68910; margin-bottom: 15px;">Why Adapt It for Personal Life?</h3>
+                <p style="margin-bottom: 15px;"><strong>Professor Sarah Thomson's insight:</strong> "We use sophisticated strategic planning at work, but wing it with our personal lives. What if we applied the same systematic thinking to life balance?"</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; border-top: 3px solid #f39c12;">
+                        <div style="font-size: 1.5em; margin-bottom: 5px;">🟠</div>
+                        <strong>Personal Resources</strong><br>
+                        <small>(Financial Perspective)</small>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; border-top: 3px solid #3498db;">
+                        <div style="font-size: 1.5em; margin-bottom: 5px;">🔵</div>
+                        <strong>Relationships</strong><br>
+                        <small>(Stakeholder Perspective)</small>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; border-top: 3px solid #27ae60;">
+                        <div style="font-size: 1.5em; margin-bottom: 5px;">🟢</div>
+                        <strong>Personal Systems</strong><br>
+                        <small>(Internal Process Perspective)</small>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; border-top: 3px solid #9b59b6;">
+                        <div style="font-size: 1.5em; margin-bottom: 5px;">🟣</div>
+                        <strong>Personal Development</strong><br>
+                        <small>(Learning & Growth Perspective)</small>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 25px; padding: 20px; background: white; border-radius: 10px; border: 2px solid #667eea;">
+                <p style="font-size: 1.1em; font-weight: 600; color: #667eea; margin-bottom: 10px;">Ready to Apply Strategic Thinking to Your Life?</p>
+                <p style="color: #5d6d7e;">The assessment takes 5-7 minutes and provides immediate insights plus a personalized action planning framework.</p>
+            </div>
+        </div>
+        
+        <form id="scorecardForm">
+            <div id="assessment" class="section resources">
+                <h2>🟠 Personal Resources</h2>
+                <p><strong>Your Foundation: Time, Energy, Health & Money</strong></p>
+                
+                <div class="question">
+                    <label>How would you rate your current energy levels?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="energy" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="energy-score">5</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>How financially secure do you feel?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="financial" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="financial-score">5</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>How well do you manage your time and priorities?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="time" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="time-score">5</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>How would you rate your physical health and wellbeing?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="health" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="health-score">5</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section relationships">
+                <h2>🔵 Relationships & Community</h2>
+                <p><strong>Your Support Network: Beyond the Work Bubble</strong></p>
+                
+                <div class="question">
+                    <label>How present and engaged are you with family and close friends?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="presence" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="presence-score">5</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>How strong is your social network outside of work?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="social" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="social-score">5</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>How connected do you feel to your local community?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="community" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="community-score">5</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>How well do you maintain meaningful relationships?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="relationships" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="relationships-score">5</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section systems">
+                <h2>🟢 Personal Systems & Habits</h2>
+                <p><strong>Your Operating System: Routines That Actually Work</strong></p>
+                
+                <div class="question">
+                    <label>How effective are your work-life boundaries?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="boundaries" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="boundaries-score">5</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>How well do you manage stress and pressure?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="stress" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="stress-score">5</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>How consistent are your daily routines and habits?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="routines" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="routines-score">5</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>How well do you recover and recharge?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="recovery" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="recovery-score">5</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section development">
+                <h2>🟣 Personal Development</h2>
+                <p><strong>Your Growth Edge: Learning Beyond Career</strong></p>
+                
+                <div class="question">
+                    <label>How much do you learn for personal enjoyment?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="learning" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="learning-score">5</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>How often do you try new experiences?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="experiences" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="experiences-score">5</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>How much time do you spend on creative activities?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="creative" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="creative-score">5</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>How much are you growing as a person?</label>
+                    <div class="slider-container">
+                        <span>1</span>
+                        <input type="range" class="slider" id="growth" min="1" max="10" value="5">
+                        <span>10</span>
+                        <div class="score-display" id="growth-score">5</div>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="button" class="calculate-btn" onclick="calculateScore()">Calculate My Strategic Life Balance Score</button>
+        </form>
+        
+        <div id="results" class="results">
+            <h2>Your Strategic Life Balance Dashboard</h2>
+            
+            <div class="overall-score">
+                <h3>Overall Strategic Life Balance Score</h3>
+                <div class="overall-number" id="overall-score">0</div>
+                <div id="overall-status">Complete assessment to see your score</div>
+            </div>
+            
+            <div class="bsc-grid">
+                <div class="bsc-quadrant resources">
+                    <h4>🟠 Personal Resources</h4>
+                    <div class="bsc-score" id="bsc-resources-score">0.0</div>
+                    <div>Financial Perspective</div>
+                </div>
+                
+                <div class="bsc-quadrant relationships">
+                    <h4>🔵 Relationships & Community</h4>
+                    <div class="bsc-score" id="bsc-relationships-score">0.0</div>
+                    <div>Stakeholder Perspective</div>
+                </div>
+                
+                <div class="bsc-quadrant systems">
+                    <h4>🟢 Personal Systems & Habits</h4>
+                    <div class="bsc-score" id="bsc-systems-score">0.0</div>
+                    <div>Internal Process Perspective</div>
+                </div>
+                
+                <div class="bsc-quadrant development">
+                    <h4>🟣 Personal Development</h4>
+                    <div class="bsc-score" id="bsc-development-score">0.0</div>
+                    <div>Learning & Growth Perspective</div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn pdf-btn" onclick="generatePDF()">📄 Download PDF Report</button>
+                <button class="action-btn goals-btn" onclick="showGoals()">🎯 Set Goals & Actions</button>
+                <button class="action-btn reset-btn" onclick="resetForm()">🔄 Retake Assessment</button>
+            </div>
+        </div>
+        
+        <!-- Goals Dashboard -->
+        <div id="goalsDashboard" class="goals-dashboard">
+            <h2>Your Strategic Life Goals & Action Plan</h2>
+            <p style="text-align: center; color: #5d6d7e; font-style: italic; margin-bottom: 30px;">
+                Use the same thoughtful planning you apply at work to create better balance in your own life. 
+                Think of this as your personal strategy - just as important as your professional one!
+            </p>
+            
+            <div class="goal-section">
+                <h3 style="color: #d68910;">🟠 Personal Resources Goals</h3>
+                <p><em>Looking after your time, energy, money, and wellbeing</em></p>
+                
+                <div class="thomson-guidance">
+                    <div class="guidance-toggle" onclick="toggleGuidance('resources')">
+                        💡 <strong>Professor Thomson's Guidance</strong> <span id="resources-toggle">+</span>
+                    </div>
+                    <div class="guidance-content" id="resources-guidance">
+                        <div class="thomson-quote">
+                            <strong>Professor Thomson's Experience:</strong> "I was earning a six-figure salary but constantly worried about money because I had no financial strategy. I treated my personal finances like I was still a student, while simultaneously managing budgets worth millions."
+                        </div>
+                        <div class="thomson-advice">
+                            <h4>Her Strategic Approach:</h4>
+                            <ul>
+                                <li><strong>Emergency Fund Priority:</strong> Build 12-month emergency fund - essential for career volatility</li>
+                                <li><strong>Energy Management:</strong> Track energy levels weekly (1-10) and identify biggest drains</li>
+                                <li><strong>Time Boundaries:</strong> "I learned to leave work at work more often - started with just 3 days per week"</li>
+                                <li><strong>Health Foundation:</strong> "Book that health check, start meal planning - basics that enable everything else"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="goal-input">
+                    <label>Goal 1:</label>
+                    <input type="text" id="resources-goal-1" placeholder="e.g., Build 6-month emergency fund">
+                </div>
+                <div class="goal-input">
+                    <label>Goal 2:</label>
+                    <input type="text" id="resources-goal-2" placeholder="e.g., Have energy for family evenings">
+                </div>
+                <div class="goal-input">
+                    <label>Goal 3:</label>
+                    <input type="text" id="resources-goal-3" placeholder="e.g., Take proper lunch breaks">
+                </div>
+                
+                <h4>Things I'll Actually Do:</h4>
+                <div class="action-input">
+                    <input type="checkbox" id="resources-action-1">
+                    <input type="text" placeholder="e.g., Set up automatic savings of £500/month">
+                </div>
+                <div class="action-input">
+                    <input type="checkbox" id="resources-action-2">
+                    <input type="text" placeholder="e.g., Leave office by 6pm three days a week">
+                </div>
+                <div class="action-input">
+                    <input type="checkbox" id="resources-action-3">
+                    <input type="text" placeholder="e.g., Book annual health check">
+                </div>
+            </div>
+            
+            <div class="goal-section">
+                <h3 style="color: #2980b9;">🔵 Relationships & Community Goals</h3>
+                <p><em>The people who matter and the difference you make</em></p>
+                
+                <div class="thomson-guidance">
+                    <div class="guidance-toggle" onclick="toggleGuidance('relationships')">
+                        💡 <strong>Professor Thomson's Guidance</strong> <span id="relationships-toggle">+</span>
+                    </div>
+                    <div class="guidance-content" id="relationships-guidance">
+                        <div class="thomson-quote">
+                            <strong>Professor Thomson's Learning:</strong> "Leadership can be profoundly isolating. You're always 'on' professionally. You rarely get to be yourself with people who understand you as a person, not a position."
+                        </div>
+                        <div class="thomson-advice">
+                            <h4>Her Relationship Strategy:</h4>
+                            <ul>
+                                <li><strong>Weekly One-on-Ones:</strong> "I instituted weekly individual time with each child - transformed our relationships"</li>
+                                <li><strong>Beyond the Work Bubble:</strong> "Joined local book club - first non-work social commitment in years"</li>
+                                <li><strong>Genuine Friendships:</strong> "Started weekend walks with a colleague who became a real friend"</li>
+                                <li><strong>Community Connection:</strong> "Being 'just Sarah' somewhere outside work was liberating"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="goal-input">
+                    <label>Goal 1:</label>
+                    <input type="text" id="relationships-goal-1" placeholder="e.g., Weekly date night with partner">
+                </div>
+                <div class="goal-input">
+                    <label>Goal 2:</label>
+                    <input type="text" id="relationships-goal-2" placeholder="e.g., Monthly social activity with non-work friends">
+                </div>
+                <div class="goal-input">
+                    <label>Goal 3:</label>
+                    <input type="text" id="relationships-goal-3" placeholder="e.g., Join local community group">
+                </div>
+                
+                <h4>Things I'll Actually Do:</h4>
+                <div class="action-input">
+                    <input type="checkbox" id="relationships-action-1">
+                    <input type="text" placeholder="e.g., Schedule weekly coffee with one family member">
+                </div>
+                <div class="action-input">
+                    <input type="checkbox" id="relationships-action-2">
+                    <input type="text" placeholder="e.g., Join local book club or sports group">
+                </div>
+                <div class="action-input">
+                    <input type="checkbox" id="relationships-action-3">
+                    <input type="text" placeholder="e.g., Plan monthly dinner with close friends">
+                </div>
+            </div>
+            
+            <div class="goal-section">
+                <h3 style="color: #27ae60;">🟢 Personal Systems & Habits Goals</h3>
+                <p><em>The routines and boundaries that protect your wellbeing</em></p>
+                
+                <div class="thomson-guidance">
+                    <div class="guidance-toggle" onclick="toggleGuidance('systems')">
+                        💡 <strong>Professor Thomson's Guidance</strong> <span id="systems-toggle">+</span>
+                    </div>
+                    <div class="guidance-content" id="systems-guidance">
+                        <div class="thomson-quote">
+                            <strong>Professor Thomson's Reality Check:</strong> "I realized I had no systems for my own life. I could run complex institutional processes but couldn't establish a consistent bedtime routine."
+                        </div>
+                        <div class="thomson-advice">
+                            <h4>Her Systems Approach:</h4>
+                            <ul>
+                                <li><strong>Non-Negotiable Boundaries:</strong> "Phone off after 8pm - took 6 months to stick but transformed my evenings"</li>
+                                <li><strong>Stress Response Protocol:</strong> "When overwhelmed: 10-minute walk, then tackle one small thing"</li>
+                                <li><strong>Weekly Planning:</strong> "Sunday evening 30-minute life planning session - like work planning but for me"</li>
+                                <li><strong>Recovery Rituals:</strong> "Built actual recovery time into calendar, not just hoping it would happen"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="goal-input">
+                    <label>Goal 1:</label>
+                    <input type="text" id="systems-goal-1" placeholder="e.g., No work emails after 7pm">
+                </div>
+                <div class="goal-input">
+                    <label>Goal 2:</label>
+                    <input type="text" id="systems-goal-2" placeholder="e.g., Daily 20-minute walk">
+                </div>
+                <div class="goal-input">
+                    <label>Goal 3:</label>
+                    <input type="text" id="systems-goal-3" placeholder="e.g., Consistent sleep schedule">
+                </div>
+                
+                <h4>Things I'll Actually Do:</h4>
+                <div class="action-input">
+                    <input type="checkbox" id="systems-action-1">
+                    <input type="text" placeholder="e.g., Set phone to do not disturb from 8pm-7am">
+                </div>
+                <div class="action-input">
+                    <input type="checkbox" id="systems-action-2">
+                    <input type="text" placeholder="e.g., Schedule 30-minute lunch break walks">
+                </div>
+                <div class="action-input">
+                    <input type="checkbox" id="systems-action-3">
+                    <input type="text" placeholder="e.g., Create weekend morning routine">
+                </div>
+            </div>
+            
+            <div class="goal-section">
+                <h3 style="color: #9b59b6;">🟣 Personal Development Goals</h3>
+                <p><em>Growing yourself, not just your career</em></p>
+                
+                <div class="thomson-guidance">
+                    <div class="guidance-toggle" onclick="toggleGuidance('development')">
+                        💡 <strong>Professor Thomson's Guidance</strong> <span id="development-toggle">+</span>
+                    </div>
+                    <div class="guidance-content" id="development-guidance">
+                        <div class="thomson-quote">
+                            <strong>Professor Thomson's Insight:</strong> "I was constantly developing professionally but hadn't learned anything just for joy in years. I felt intellectually alive at work but personally stagnant."
+                        </div>
+                        <div class="thomson-advice">
+                            <h4>Her Development Strategy:</h4>
+                            <ul>
+                                <li><strong>Learning for Joy:</strong> "Started Italian lessons - first time learning something with no career purpose"</li>
+                                <li><strong>Creative Outlets:</strong> "Took up pottery - using hands instead of head was revolutionary"</li>
+                                <li><strong>New Experiences:</strong> "Monthly 'try something new' commitment - comedy class, hiking group, cooking course"</li>
+                                <li><strong>Personal Growth:</strong> "Read philosophy, psychology, novels - fed my soul not just my CV"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="goal-input">
+                    <label>Goal 1:</label>
+                    <input type="text" id="development-goal-1" placeholder="e.g., Learn a new language">
+                </div>
+                <div class="goal-input">
+                    <label>Goal 2:</label>
+                    <input type="text" id="development-goal-2" placeholder="e.g., Try a creative hobby">
+                </div>
+                <div class="goal-input">
+                    <label>Goal 3:</label>
+                    <input type="text" id="development-goal-3" placeholder="e.g., Read more fiction">
+                </div>
+                
+                <h4>Things I'll Actually Do:</h4>
+                <div class="action-input">
+                    <input type="checkbox" id="development-action-1">
+                    <input type="text" placeholder="e.g., Sign up for evening art class">
+                </div>
+                <div class="action-input">
+                    <input type="checkbox" id="development-action-2">
+                    <input type="text" placeholder="e.g., Join local walking or hiking group">
+                </div>
+                <div class="action-input">
+                    <input type="checkbox" id="development-action-3">
+                    <input type="text" placeholder="e.g., Read one non-work book per month">
+                </div>
+            </div>
+
+            <!-- Implementation Plan -->
+            <div class="implementation-plan">
+                <h3>📅 90-Day Implementation Plan</h3>
+                <p style="margin-bottom: 20px;"><em>Strategic implementation - just like you'd roll out any important initiative</em></p>
+                
+                <div class="phase">
+                    <h4>Phase 1: Foundation (Days 1-30)</h4>
+                    <p><strong>Focus: Pick 2-3 actions that will create immediate positive impact</strong></p>
+                    <label><input type="checkbox"> Set up automatic savings/emergency fund contribution</label>
+                    <label><input type="checkbox"> Establish one firm boundary (e.g., no emails after 7pm)</label>
+                    <label><input type="checkbox"> Schedule one relationship commitment (e.g., weekly family time)</label>
+                    <label><input type="checkbox"> Book health check-ups you've been postponing</label>
+                </div>
+                
+                <div class="phase">
+                    <h4>Phase 2: Systems (Days 31-60)</h4>
+                    <p><strong>Focus: Build sustainable routines and expand what's working</strong></p>
+                    <label><input type="checkbox"> Implement consistent daily routine</label>
+                    <label><input type="checkbox"> Join one community/social group</label>
+                    <label><input type="checkbox"> Start one learning/development activity</label>
+                    <label><input type="checkbox"> Establish stress management protocol</label>
+                </div>
+                
+                <div class="phase">
+                    <h4>Phase 3: Growth (Days 61-90)</h4>
+                    <p><strong>Focus: Expand and optimize your life balance system</strong></p>
+                    <label><input type="checkbox"> Add creative/personal development activities</label>
+                    <label><input type="checkbox"> Optimize financial planning beyond emergency fund</label>
+                    <label><input type="checkbox"> Deepen community connections</label>
+                    <label><input type="checkbox"> Plan next quarterly review and goals</label>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 12px; text-align: center; margin-top: 30px;">
+                <h3>🎯 Your Personal Balanced Scorecard Dashboard</h3>
+                <p>Review these goals monthly, just like you would review KPIs at work.</p>
+                <p><strong>Next Review Date:</strong> <input type="date" style="padding: 8px; border: none; border-radius: 4px; margin-left: 10px;"></p>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn pdf-btn" onclick="generateGoalsPDF()">📄 Save Goals as PDF</button>
+                <button class="action-btn reset-btn" onclick="hideGoals()">← Back to Results</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="help-modal">
+        <div class="help-content">
+            <span class="help-close" onclick="closeHelp()">&times;</span>
+            <h2 style="color: #667eea; margin-bottom: 25px;">📚 How to Use Your Strategic Life Balance Scorecard</h2>
+            
+            <div class="help-section">
+                <h3>📊 Taking the Assessment</h3>
+                <ul>
+                    <li><strong>Be Honest:</strong> Move sliders (1-10) based on your current reality, not where you want to be</li>
+                    <li><strong>Think Recent:</strong> Rate based on the last 2-3 months, not just this week</li>
+                    <li><strong>Consider Context:</strong> Rate relative to what's realistic for your life stage and circumstances</li>
+                    <li><strong>No Perfect Scores:</strong> Very few people score 10/10 - that's normal and healthy</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>🎯 Understanding Your Results</h3>
+                <ul>
+                    <li><strong>8.0+:</strong> Excellent strategic balance - you're thriving across all areas!</li>
+                    <li><strong>7.0-7.9:</strong> Strong balance - minor tweaks will optimize your life</li>
+                    <li><strong>6.0-6.9:</strong> Good foundation - some areas need strategic attention</li>
+                    <li><strong>5.0-5.9:</strong> Moderate balance - time for strategic life planning</li>
+                    <li><strong>Below 5.0:</strong> Needs attention - perfect time to apply your planning skills to your life</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>📋 Setting Effective Goals</h3>
+                <ul>
+                    <li><strong>Start Small:</strong> Pick 2-3 actions per area maximum - you can always add more later</li>
+                    <li><strong>Be Specific:</strong> "Exercise more" becomes "Walk 20 minutes after dinner 3x/week"</li>
+                    <li><strong>Use Professor Thomson's Guidance:</strong> Click the expandable sections for expert insights</li>
+                    <li><strong>Follow the 90-Day Plan:</strong> Implement gradually for sustainable change</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>💡 Getting the Most from This Tool</h3>
+                <ul>
+                    <li><strong>Monthly Reviews:</strong> Retake the assessment monthly to track progress</li>
+                    <li><strong>Save Everything:</strong> Download PDF reports to track your journey</li>
+                    <li><strong>Focus on Balance:</strong> Don't aim for perfect scores - aim for sustainable balance</li>
+                    <li><strong>Strategic Mindset:</strong> Apply the same planning rigor you use at work to your personal life</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>🚀 Quick Start Guide</h3>
+                <ul>
+                    <li><strong>Step 1:</strong> Complete the 16-question assessment honestly</li>
+                    <li><strong>Step 2:</strong> Review your balanced scorecard results</li>
+                    <li><strong>Step 3:</strong> Identify your lowest-scoring area for priority focus</li>
+                    <li><strong>Step 4:</strong> Set 2-3 specific, actionable goals</li>
+                    <li><strong>Step 5:</strong> Use the 90-day implementation plan</li>
+                    <li><strong>Step 6:</strong> Schedule monthly progress reviews</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation functions
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function showHelp() {
+            document.getElementById('helpModal').style.display = 'block';
+        }
+
+        function closeHelp() {
+            document.getElementById('helpModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('helpModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Update slider displays
+        document.querySelectorAll('.slider').forEach(slider => {
+            const scoreDisplay = document.getElementById(slider.id + '-score');
+            slider.addEventListener('input', function() {
+                scoreDisplay.textContent = this.value;
+            });
+        });
+
+        // Toggle guidance sections
+        function toggleGuidance(section) {
+            const content = document.getElementById(section + '-guidance');
+            const toggle = document.getElementById(section + '-toggle');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                toggle.textContent = '+';
+            } else {
+                content.classList.add('active');
+                toggle.textContent = '-';
+            }
+        }
+
+        // Calculate scores
+        function calculateScore() {
+            // Get all slider values
+            const scores = {
+                resources: [
+                    parseInt(document.getElementById('energy').value),
+                    parseInt(document.getElementById('financial').value),
+                    parseInt(document.getElementById('time').value),
+                    parseInt(document.getElementById('health').value)
+                ],
+                relationships: [
+                    parseInt(document.getElementById('presence').value),
+                    parseInt(document.getElementById('social').value),
+                    parseInt(document.getElementById('community').value),
+                    parseInt(document.getElementById('relationships').value)
+                ],
+                systems: [
+                    parseInt(document.getElementById('boundaries').value),
+                    parseInt(document.getElementById('stress').value),
+                    parseInt(document.getElementById('routines').value),
+                    parseInt(document.getElementById('recovery').value)
+                ],
+                development: [
+                    parseInt(document.getElementById('learning').value),
+                    parseInt(document.getElementById('experiences').value),
+                    parseInt(document.getElementById('creative').value),
+                    parseInt(document.getElementById('growth').value)
+                ]
+            };
+
+            // Calculate averages for each area
+            const averages = {};
+            for (let area in scores) {
+                const sum = scores[area].reduce((a, b) => a + b, 0);
+                averages[area] = (sum / scores[area].length).toFixed(1);
+            }
+
+            // Calculate overall score
+            const overallScore = ((parseFloat(averages.resources) + 
+                                 parseFloat(averages.relationships) + 
+                                 parseFloat(averages.systems) + 
+                                 parseFloat(averages.development)) / 4).toFixed(1);
+
+            // Update display
+            document.getElementById('overall-score').textContent = overallScore;
+            document.getElementById('bsc-resources-score').textContent = averages.resources;
+            document.getElementById('bsc-relationships-score').textContent = averages.relationships;
+            document.getElementById('bsc-systems-score').textContent = averages.systems;
+            document.getElementById('bsc-development-score').textContent = averages.development;
+
+            // Update status message
+            let statusMessage = '';
+            if (overallScore >= 8.0) {
+                statusMessage = 'Excellent Strategic Balance - You\'re thriving across all areas!';
+            } else if (overallScore >= 7.0) {
+                statusMessage = 'Strong Strategic Balance - Minor tweaks will optimize your life balance';
+            } else if (overallScore >= 6.0) {
+                statusMessage = 'Good Foundation - Some areas need strategic attention';
+            } else if (overallScore >= 5.0) {
+                statusMessage = 'Moderate Balance - Time for strategic life planning';
+            } else {
+                statusMessage = 'Needs Strategic Attention - Perfect time to apply your planning skills to your life';
+            }
+            document.getElementById('overall-status').textContent = statusMessage;
+
+            // Show results
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showGoals() {
+            document.getElementById('goalsDashboard').style.display = 'block';
+            document.getElementById('goalsDashboard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideGoals() {
+            document.getElementById('goalsDashboard').style.display = 'none';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetForm() {
+            // Reset all sliders to 5
+            document.querySelectorAll('.slider').forEach(slider => {
+                slider.value = 5;
+                document.getElementById(slider.id + '-score').textContent = '5';
+            });
+            
+            // Hide results and goals
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('goalsDashboard').style.display = 'none';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function generatePDF() {
+            // Get scores
+            const overallScore = document.getElementById('overall-score').textContent;
+            const resourcesScore = document.getElementById('bsc-resources-score').textContent;
+            const relationshipsScore = document.getElementById('bsc-relationships-score').textContent;
+            const systemsScore = document.getElementById('bsc-systems-score').textContent;
+            const developmentScore = document.getElementById('bsc-development-score').textContent;
+            
+            // Create PDF using jsPDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Title
+            doc.setFontSize(20);
+            doc.text('Personal Strategic Life Balance Scorecard', 20, 30);
+            
+            doc.setFontSize(14);
+            doc.text('Assessment Results', 20, 50);
+            
+            // Overall Score
+            doc.setFontSize(16);
+            doc.text('Overall Score: ' + overallScore + '/10', 20, 70);
+            
+            // Individual scores
+            doc.setFontSize(12);
+            doc.text('Personal Resources: ' + resourcesScore + '/10', 30, 90);
+            doc.text('Relationships & Community: ' + relationshipsScore + '/10', 30, 105);
+            doc.text('Personal Systems & Habits: ' + systemsScore + '/10', 30, 120);
+            doc.text('Personal Development: ' + developmentScore + '/10', 30, 135);
+            
+            // Date
+            const today = new Date();
+            doc.text('Assessment Date: ' + today.toLocaleDateString(), 20, 160);
+            
+            // Save
+            doc.save('life-balance-scorecard-results.pdf');
+        }
+
+        function generateGoalsPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            doc.setFontSize(18);
+            doc.text('Personal Strategic Life Goals & Action Plan', 20, 30);
+            
+            // Get goals from inputs
+            let yPos = 50;
+            const sections = ['resources', 'relationships', 'systems', 'development'];
+            const sectionNames = ['Personal Resources', 'Relationships & Community', 'Personal Systems & Habits', 'Personal Development'];
+            
+            sections.forEach((section, index) => {
+                doc.setFontSize(14);
+                doc.text(sectionNames[index] + ' Goals:', 20, yPos);
+                yPos += 15;
+                
+                for (let i = 1; i <= 3; i++) {
+                    const goalInput = document.getElementById(section + '-goal-' + i);
+                    if (goalInput.value) {
+                        doc.setFontSize(10);
+                        doc.text('• ' + goalInput.value, 25, yPos);
+                        yPos += 10;
+                    }
+                }
+                yPos += 5;
+                
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 30;
+                }
+            });
+            
+            doc.save('life-balance-goals.pdf');
+        }
+    </script>
+<!-- Back to Top Button -->
+<button id="backToTop" onclick="scrollToTop()" style="position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,#1e3a5f,#2c5aa0);color:white;border:none;border-radius:50%;width:50px;height:50px;cursor:pointer;font-size:18px;box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:1000;opacity:0;transition:all 0.3s;">↑</button>
+
+<script>
+window.onscroll = function() {
+    const btn = document.getElementById('backToTop');
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        btn.style.opacity = '1';
+        btn.style.visibility = 'visible';
+    } else {
+        btn.style.opacity = '0';
+        btn.style.visibility = 'hidden';
+    }
+};
+
+function scrollToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
+</body>
+</html>
